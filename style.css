@@ -145,3 +145,62 @@ body {
     background-color: #4169e1; /* 服の色 (RoyalBlue) */
     z-index: 2; /* 手前に表示 */
 }
+
+/* D-pad styling */
+#dpad-container {
+    display: grid;
+    grid-template-columns: repeat(3, 50px);
+    grid-template-rows: repeat(3, 50px);
+    gap: 5px;
+    margin: 20px auto;
+    width: 160px; /* (50px * 3) + (5px * 2) */
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.8;
+}
+
+.dpad-btn {
+    background-color: #888;
+    color: white;
+    border: 2px solid #555;
+    border-radius: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    user-select: none; /* Prevent text selection on tap */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dpad-btn:active {
+    background-color: #666;
+}
+
+#dpad-up {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#dpad-left {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#dpad-right {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+#dpad-down {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+.dpad-center {
+    grid-column: 2;
+    grid-row: 2;
+    background-color: #555;
+    border-radius: 50%;
+}
