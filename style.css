@@ -3,6 +3,7 @@ body {
     background-color: #f0f0f0;
     text-align: center;
     color: #333;
+    padding-bottom: 200px; /* Space for fixed D-pad */
 }
 
 #game-container {

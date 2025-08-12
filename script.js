@@ -139,6 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		gameMap[nextY][nextX] = 4;
 		playerPos = { y: nextY, x: nextX };
 
+		resetButton.style.display = "inline-block"; // Show reset button after first move
 		render();
 		checkWin();
 	}
