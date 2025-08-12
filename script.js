@@ -197,6 +197,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
+	// D-pad event listeners
+	document.getElementById("dpad-up").addEventListener("click", () => move(-1, 0));
+	document.getElementById("dpad-down").addEventListener("click", () => move(1, 0));
+	document.getElementById("dpad-left").addEventListener("click", () => move(0, -1));
+	document.getElementById("dpad-right").addEventListener("click", () => move(0, 1));
+
 	resetButton.addEventListener("click", init);
 
 	init();
