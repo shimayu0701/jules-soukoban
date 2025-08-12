@@ -12,9 +12,8 @@ on:
       - 'created'
 
 concurrency:
-  group: '${{ github.workflow }}-${{ github.event.issue.number }}'
-  cancel-in-progress: |-
-    ${{ github.event.sender.type == 'User' && ( github.event.issue.author_association == 'OWNER' || github.event.issue.author_association == 'MEMBER' || github.event.issue.author_association == 'COLLABORATOR') }}
+  group: '${{ github.workflow }}-${{ github.event.issue.number || github.event.pull_request.number }}'
+  cancel-in-progress: true
 
 defaults:
   run:
