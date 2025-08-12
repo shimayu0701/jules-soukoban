@@ -7,6 +7,7 @@ body {
 }
 
 #game-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,13 +32,19 @@ body {
 }
 
 #reset-button {
-    padding: 10px 20px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px;
     font-size: 1em;
     cursor: pointer;
     border: none;
     background-color: #5cb85c;
     color: white;
-    border-radius: 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tile {
@@ -150,11 +157,9 @@ body {
 /* D-pad styling */
 #dpad-container {
     display: grid;
-    grid-template-columns: repeat(3, 50px);
-    grid-template-rows: repeat(3, 50px);
+    grid-template-columns: repeat(3, 40px);
+    grid-template-rows: repeat(3, 40px);
     gap: 5px;
-    margin: 20px auto;
-    width: 160px; /* (50px * 3) + (5px * 2) */
     position: fixed;
     bottom: 20px;
     left: 50%;
@@ -167,7 +172,7 @@ body {
     color: white;
     border: 2px solid #555;
     border-radius: 10px;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     user-select: none; /* Prevent text selection on tap */
     display: flex;
