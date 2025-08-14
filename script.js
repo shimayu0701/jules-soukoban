@@ -3,22 +3,21 @@ document.addEventListener("DOMContentLoaded", () => {
 	const messageEl = document.getElementById("message");
 	const resetButton = document.getElementById("reset-button");
 	const backButton = document.getElementById("back-button");
-    const verticalCoords = document.getElementById("vertical-coords");
-    const horizontalCoords = document.getElementById("horizontal-coords");
+	const verticalCoords = document.getElementById("vertical-coords");
+	const horizontalCoords = document.getElementById("horizontal-coords");
 
 	let lastState = null;
 
 	// 0: 床, 1: 壁, 2: 箱, 3: ゴール, 4: プレイヤー
 	// ご指定のマップに修正
 	const initialMap = [
-		[0, 1, 1, 1, 1, 1, 0],
-		[1, 1, 0, 3, 0, 1, 0],
-		[1, 0, 2, 3, 2, 1, 1],
-		[1, 0, 0, 3, 2, 0, 1],
-		[1, 0, 2, 3, 0, 4, 1],
-		[1, 0, 2, 3, 2, 1, 1],
-		[1, 1, 0, 3, 0, 1, 0],
-		[1, 0, 1, 1, 1, 1, 1],
+		[1, 1, 1, 1, 1, 1, 1, 1],
+		[1, 3, 3, 0, 0, 0, 0, 1],
+		[1, 3, 3, 2, 0, 2, 0, 1],
+		[1, 2, 1, 2, 2, 2, 1, 1],
+		[1, 3, 3, 2, 0, 2, 4, 1],
+		[1, 3, 3, 0, 0, 0, 0, 1],
+		[1, 1, 1, 1, 1, 1, 1, 1],
 	];
 
 	let gameMap;
@@ -51,32 +50,32 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (initialMap[playerPos.y][playerPos.x] === 3) {
 			goalCount++;
 		}
-        setupCoords();
+		setupCoords();
 		render();
 	}
 
-    function setupCoords() {
-        verticalCoords.innerHTML = "";
-        horizontalCoords.innerHTML = "";
+	function setupCoords() {
+		verticalCoords.innerHTML = "";
+		horizontalCoords.innerHTML = "";
 
-        const rows = gameMap.length;
-        const cols = gameMap[0].length;
+		const rows = gameMap.length;
+		const cols = gameMap[0].length;
 
-        verticalCoords.style.gridTemplateRows = `repeat(${rows}, 40px)`;
-        horizontalCoords.style.gridTemplateColumns = `repeat(${cols}, 40px)`;
+		verticalCoords.style.gridTemplateRows = `repeat(${rows}, 40px)`;
+		horizontalCoords.style.gridTemplateColumns = `repeat(${cols}, 40px)`;
 
-        const kanji = ["一", "二", "三", "四", "五", "六", "七"];
-        for (let i = 0; i < rows; i++) {
-            const coord = document.createElement("div");
-            coord.textContent = i + 1;
-            verticalCoords.appendChild(coord);
-        }
-        for (let i = 0; i < cols; i++) {
-            const coord = document.createElement("div");
-            coord.textContent = kanji[i];
-            horizontalCoords.appendChild(coord);
-        }
-    }
+		const kanji = ["一", "二", "三", "四", "五", "六", "七"];
+		for (let i = 0; i < rows; i++) {
+			const coord = document.createElement("div");
+			coord.textContent = i + 1;
+			verticalCoords.appendChild(coord);
+		}
+		for (let i = 0; i < cols; i++) {
+			const coord = document.createElement("div");
+			coord.textContent = kanji[i];
+			horizontalCoords.appendChild(coord);
+		}
+	}
 
 	function render() {
 		gameBoard.innerHTML = "";
@@ -130,8 +129,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		// Save current state before moving
 		lastState = {
-			map: gameMap.map(row => [...row]),
-			pos: { ...playerPos }
+			map: gameMap.map((row) => [...row]),
+			pos: { ...playerPos },
 		};
 
 		const { y, x } = playerPos;
@@ -237,10 +236,18 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	// D-pad event listeners
-	document.getElementById("dpad-up").addEventListener("click", () => move(-1, 0));
-	document.getElementById("dpad-down").addEventListener("click", () => move(1, 0));
-	document.getElementById("dpad-left").addEventListener("click", () => move(0, -1));
-	document.getElementById("dpad-right").addEventListener("click", () => move(0, 1));
+	document
+		.getElementById("dpad-up")
+		.addEventListener("click", () => move(-1, 0));
+	document
+		.getElementById("dpad-down")
+		.addEventListener("click", () => move(1, 0));
+	document
+		.getElementById("dpad-left")
+		.addEventListener("click", () => move(0, -1));
+	document
+		.getElementById("dpad-right")
+		.addEventListener("click", () => move(0, 1));
 
 	resetButton.addEventListener("click", init);
 	backButton.addEventListener("click", undoMove);
