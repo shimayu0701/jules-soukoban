@@ -7,14 +7,35 @@ body {
 }
 
 #game-container {
+    display: grid;
+    grid-template-columns: 40px auto; /* Coords column and game board column */
+    grid-template-rows: 40px auto; /* Coords row and game board row */
+    grid-template-areas:
+        ". h-coords"
+        "v-coords g-board";
+    margin: 20px auto;
     position: relative;
-    display: flex;
-    flex-direction: column;
+    width: fit-content; /* Adjust width to content */
+}
+
+#horizontal-coords {
+    grid-area: h-coords;
+    display: grid;
     align-items: center;
-    margin-top: 20px;
+    justify-items: center;
+    font-weight: bold;
+}
+
+#vertical-coords {
+    grid-area: v-coords;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    font-weight: bold;
 }
 
 #game-board {
+    grid-area: g-board;
     display: grid;
     border: 2px solid #333;
     background-color: #ff7f50; /* 床の色 (Coral) */
@@ -40,6 +61,22 @@ body {
     cursor: pointer;
     border: none;
     background-color: #5cb85c;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#back-button {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    background-color: #f0ad4e;
     color: white;
     border-radius: 50%;
     display: flex;
