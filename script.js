@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	let gameMap;
 	let playerPos;
-	let goalCount;
+	let totalGoals;
 	let gameOver = false;
 
 	function init() {
@@ -26,23 +26,18 @@ document.addEventListener("DOMContentLoaded", () => {
 		gameOver = false;
 		messageEl.textContent = "";
 		resetButton.style.display = "none";
+		totalGoals = 0;
 
-		goalCount = 0;
-		for (let y = 0; y < gameMap.length; y++) {
-			for (let x = 0; x < gameMap[y].length; x++) {
-				if (initialMap[y][x] === 4) {
+		for (let y = 0; y < initialMap.length; y++) {
+			for (let x = 0; x < initialMap[y].length; x++) {
+				const tile = initialMap[y][x];
+				if (tile === 4) {
 					playerPos = { y, x };
-					// プレイヤーの初期位置も床やゴールの場合があるので、
-					// gameMapのプレイヤー位置を上書きする前にgoalCountを計算
 				}
-				if (initialMap[y][x] === 3) {
-					goalCount++;
+				if (tile === 3) {
+					totalGoals++;
 				}
 			}
-		}
-		// プレイヤーの初期位置がゴール上にある場合も考慮
-		if (initialMap[playerPos.y][playerPos.x] === 3) {
-			goalCount++;
 		}
 		render();
 	}
@@ -58,9 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				tile.classList.add("tile");
 
 				const tileType = gameMap[y][x];
-				const isInitialGoal =
-					initialMap[y][x] === 3 ||
-					(initialMap[y][x] === 4 && initialMap[y][x] === 3);
+				const isInitialGoal = initialMap[y][x] === 3;
 
 				// ★描画ロジック修正
 				// 背景を描画 (ゴール or 床)
@@ -131,9 +124,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		// ★移動ロジック修正
 		// プレイヤーが元いた場所を、本来の地形（床かゴール）に戻す
-		// initialMapでプレイヤーの初期位置も考慮する
+		// initialMapを参照して、元がゴールならゴールに、それ以外（床やプレイヤー初期位置）なら床に戻す
 		const originalTile = initialMap[y][x];
-		gameMap[y][x] = originalTile === 3 || originalTile === 4 ? 3 : 0;
+		if (originalTile === 3) {
+			gameMap[y][x] = 3; // 元がゴールならゴールに戻す
+		} else {
+			gameMap[y][x] = 0; // それ以外は床に戻す
+		}
 
 		// プレイヤーを移動
 		gameMap[nextY][nextX] = 4;
@@ -148,28 +145,14 @@ document.addEventListener("DOMContentLoaded", () => {
 		let boxesOnGoals = 0;
 		for (let y = 0; y < gameMap.length; y++) {
 			for (let x = 0; x < gameMap[y].length; x++) {
-				const isInitialGoal =
-					initialMap[y][x] === 3 ||
-					(initialMap[y][x] === 4 && initialMap[y][x] === 3);
-				if (isInitialGoal && gameMap[y][x] === 2) {
+				// initialMapでゴールだった場所 かつ 現在マップで箱がある場所
+				if (initialMap[y][x] === 3 && gameMap[y][x] === 2) {
 					boxesOnGoals++;
 				}
 			}
 		}
 
-		// ゴールの総数を再計算
-		let totalGoals = 0;
-		for (let y = 0; y < initialMap.length; y++) {
-			for (let x = 0; x < initialMap[y].length; x++) {
-				if (
-					initialMap[y][x] === 3 ||
-					(initialMap[y][x] === 4 && initialMap[y][x] === 3)
-				) {
-					totalGoals++;
-				}
-			}
-		}
-
+		// すべてのゴールに箱が置かれたかチェック
 		if (boxesOnGoals === totalGoals) {
 			gameOver = true;
 			messageEl.textContent = "クリア！おめでとうございます！";
